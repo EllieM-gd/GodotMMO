@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cd18n33hlll8h"]
+
+[ext_resource type="FontFile" uid="uid://cpufcof2toydr" path="res://Fonts/Merchant Copy.ttf" id="1_0dddo"]
+[ext_resource type="Script" uid="uid://bwuaoxytx5ijc" path="res://Scripts/Chat.gd" id="1_yc4ao"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0dddo"]
+bg_color = Color(0.8089983, 0.8089983, 0.8089982, 1)
+border_color = Color(0.017732387, 0.017732397, 0.017732365, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 20
+expand_margin_left = 5.0
+expand_margin_right = 3.0
+shadow_size = 3
+shadow_offset = Vector2(3.97, 2.2)
+
+[node name="Button" type="Button" unique_id=1771514610]
+z_index = 7
+texture_filter = 1
+custom_minimum_size = Vector2(150, 0)
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 0.827451)
+theme_override_constants/outline_size = 1
+theme_override_constants/h_separation = 4
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("1_0dddo")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/disabled = SubResource("StyleBoxFlat_0dddo")
+disabled = true
+text = "Hello there my name is Xaa"
+autowrap_mode = 2
+script = ExtResource("1_yc4ao")
+
+[node name="Timer" type="Timer" parent="." unique_id=297334677]
+wait_time = 8.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

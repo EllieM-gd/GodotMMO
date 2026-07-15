@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://bndmddm6ndh1o"]
+
+[ext_resource type="Script" uid="uid://v8yh0nvepq2u" path="res://Scripts/actor.gd" id="1_lfvdv"]
+[ext_resource type="SpriteFrames" uid="uid://d25o2vt7d8kcx" path="res://Sprites/SpriteFrames/Frog.tres" id="2_7ei5c"]
+[ext_resource type="FontFile" uid="uid://cpufcof2toydr" path="res://Fonts/Merchant Copy.ttf" id="3_7ei5c"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k81ir"]
+font = ExtResource("3_7ei5c")
+font_size = 25
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oka2p"]
+size = Vector2(73, 67)
+
+[node name="Actor" type="Node2D" unique_id=424707013]
+script = ExtResource("1_lfvdv")
+speed = 250.0
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=634379699 groups=["player"]]
+collision_layer = 2
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1288417270]
+texture_filter = 1
+scale = Vector2(7, 7)
+sprite_frames = ExtResource("2_7ei5c")
+animation = &"Idle"
+
+[node name="Label" type="Label" parent="CharacterBody2D" unique_id=412814388]
+z_index = 10
+custom_minimum_size = Vector2(100, 0)
+offset_left = -115.0
+offset_top = 60.0
+offset_right = 116.0
+offset_bottom = 83.0
+text = "Placeholder"
+label_settings = SubResource("LabelSettings_k81ir")
+horizontal_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=1446881189]
+enabled = false
+drag_horizontal_enabled = true
+drag_left_margin = 0.3
+drag_top_margin = 0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1046542516]
+position = Vector2(5.5, 23.5)
+shape = SubResource("RectangleShape2D_oka2p")
+
+[node name="ChatContainer" type="VBoxContainer" parent="CharacterBody2D" unique_id=1632238318]
+offset_left = -72.0
+offset_top = -95.0
+offset_right = -32.0
+offset_bottom = -55.0
+size_flags_vertical = 3
+alignment = 2

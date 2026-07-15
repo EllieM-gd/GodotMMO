@@ -1,0 +1,37 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dwovr7ukuisj0"]
+
+[ext_resource type="Texture2D" uid="uid://b3x5nkwndbdnn" path="res://Sprites/animals.png" id="1_x3taa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3ymv"]
+atlas = ExtResource("1_x3taa")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iprba"]
+atlas = ExtResource("1_x3taa")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tg36b"]
+atlas = ExtResource("1_x3taa")
+region = Rect2(112, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w3ymv")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iprba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tg36b")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 5.0
+}]

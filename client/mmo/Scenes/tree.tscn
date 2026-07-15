@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://dd7m0rikhdo3d"]
+
+[ext_resource type="Script" uid="uid://t8x6yl3r0rwa" path="res://Tree.gd" id="1_rsuno"]
+[ext_resource type="Texture2D" uid="uid://d1tqibt0c8ryg" path="res://Sprites/Outdoor decoration/Oak_Tree.png" id="2_l7sa7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l3oha"]
+size = Vector2(40, 47)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rsuno"]
+size = Vector2(12, 3.75)
+
+[node name="Tree" type="Node2D" unique_id=774949438 groups=["tree"]]
+z_index = 6
+script = ExtResource("1_rsuno")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=172688438]
+texture_filter = 1
+texture = ExtResource("2_l7sa7")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2068719837]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2114327503]
+z_index = 5
+position = Vector2(0, -6.5)
+shape = SubResource("RectangleShape2D_l3oha")
+
+[node name="Timer" type="Timer" parent="." unique_id=1032402659]
+wait_time = 10.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=694577426]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=571041620]
+position = Vector2(0, 17.5)
+scale = Vector2(1, 0.8)
+shape = SubResource("RectangleShape2D_rsuno")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

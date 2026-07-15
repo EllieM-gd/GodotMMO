@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://c72fdqith37ij"]
+
+[ext_resource type="Script" uid="uid://du7h1i7irxhlb" path="res://Scripts/chat_box.gd" id="1_3byjh"]
+[ext_resource type="FontFile" uid="uid://cpufcof2toydr" path="res://Fonts/Merchant Copy.ttf" id="2_0gy2m"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_m5huo"]
+font = ExtResource("2_0gy2m")
+font_size = 41
+outline_size = 3
+outline_color = Color(0.11764706, 0.11764706, 0.11764706, 1)
+
+[node name="ChatBox" type="Control" unique_id=1706178480]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3byjh")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1348385336]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=1857365503]
+anchors_preset = -1
+anchor_top = 0.67
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/VBoxContainer" unique_id=168347983]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/line_separation = 2
+theme_override_fonts/normal_font = ExtResource("2_0gy2m")
+theme_override_font_sizes/normal_font_size = 30
+scroll_following = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer" unique_id=1880511941]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer" unique_id=1701994199]
+texture_filter = 1
+layout_mode = 2
+text = "[SAY]:"
+label_settings = SubResource("LabelSettings_m5huo")
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/VBoxContainer/HBoxContainer" unique_id=774094472]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_0gy2m")
+theme_override_font_sizes/font_size = 35
+placeholder_text = "[MESSAGE]"
+
+[connection signal="editing_toggled" from="CanvasLayer/VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_editing_toggled"]
+[connection signal="text_submitted" from="CanvasLayer/VBoxContainer/HBoxContainer/LineEdit" to="." method="text_entered"]

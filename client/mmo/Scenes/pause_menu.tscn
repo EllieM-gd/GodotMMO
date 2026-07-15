@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cb0nvgktgtu1u"]
+
+[ext_resource type="Script" uid="uid://cevxdbx06huxo" path="res://PauseMenu.gd" id="1_k0w1u"]
+[ext_resource type="FontFile" uid="uid://cpufcof2toydr" path="res://Fonts/Merchant Copy.ttf" id="2_1och7"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=374155375]
+script = ExtResource("1_k0w1u")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=970298917]
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.3
+anchor_right = 0.55
+anchor_bottom = 0.7
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="RESUME" type="Button" parent="VBoxContainer" unique_id=745866409]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_1och7")
+theme_override_font_sizes/font_size = 40
+text = "RESUME"
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=1197418865]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_1och7")
+theme_override_font_sizes/font_size = 40
+text = "DISCONNECT"

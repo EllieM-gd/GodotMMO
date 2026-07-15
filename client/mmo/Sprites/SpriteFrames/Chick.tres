@@ -1,0 +1,44 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dgoqxix3vouqc"]
+
+[ext_resource type="Texture2D" uid="uid://b3x5nkwndbdnn" path="res://Sprites/animals.png" id="1_iopab"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6en4a"]
+atlas = ExtResource("1_iopab")
+region = Rect2(128, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cipsf"]
+atlas = ExtResource("1_iopab")
+region = Rect2(128, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vn0s0"]
+atlas = ExtResource("1_iopab")
+region = Rect2(0, 96, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfav7"]
+atlas = ExtResource("1_iopab")
+region = Rect2(16, 96, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6en4a")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cipsf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vn0s0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfav7")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 12.0
+}]
