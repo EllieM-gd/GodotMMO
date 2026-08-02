@@ -59,6 +59,33 @@ class GameServerProtocol(WebSocketServerProtocol):
             self.send_client(p)
         elif p.action == packet.Action.UpdateRocks:
             self.send_client(p)
+        elif p.action == packet.Action.DeleteNode:
+            if sender == self:
+                # Delete the node from the database
+                node_id = p.payloads[0]
+                try:
+                    node = models.WorldNode.objects.get(id=node_id)
+                    node.delete()
+                    for n in self.factory.world_objects:
+                        if n.id == node_id:
+                            self.factory.world_objects.remove(n)
+                            break  # Stop searching once found
+
+                    # Broadcast the deletion to all other players
+                    self.broadcast(p, exclude_self=True)
+                except models.WorldNode.DoesNotExist:
+                    print(f"Node with id {node_id} does not exist.")
+            else:
+                self.send_client(p)
+        elif p.action == packet.Action.RockRequest:
+            if sender == self:
+                amount = p.payloads[0]
+                instanced_entity = self.actor.instanced_entity
+                instanced_entity.Rocks += amount
+                instanced_entity.save()
+                # Send an update to the player about their new rock count
+                update_packet = packet.UpdateRocksPacket(instanced_entity.entity.id, instanced_entity.Rocks)
+                self.send_client(update_packet)
         else:
             print(f"Unhandled packet in PLAY state: {p}")
 
@@ -85,7 +112,7 @@ class GameServerProtocol(WebSocketServerProtocol):
                     if other != self and other.actor:
                         self.send_client(packet.ModelDataPacket(models.create_dict(other.actor)))
                 for node in self.factory.world_objects:
-                    self.send_client(packet.SpawnNodePacket(node.node_type, node.x, node.y, node.RespawnTimer))
+                    self.send_client(packet.SpawnNodePacket(node.node_type, node.x, node.y, node.RespawnTimer, node.id))
             else:
                 self.send_client(packet.DenyPacket("Invalid username or password"))
         elif p.action == packet.Action.Register:

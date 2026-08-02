@@ -27,6 +27,7 @@ func _ready():
 	_network_client.connect("disconnected", self._handle_client_disconnected)
 	_network_client.connect("error", self._handle_network_error)
 	_network_client.connect("data", self._handle_network_data)
+	Globals.request_rocks.connect(_rock_request)
 	add_child(_network_client)
 	_network_client.connect_to_server("127.0.0.1", 8081)
 	
@@ -70,8 +71,10 @@ func PLAY(_p):
 		"UpdateRocks":
 			if _rocks != null and _actors[int(_p.payloads[0])] == _player_actor:
 				_rocks._update(int(_p.payloads[1]))
+		"DeleteNode":
+			Globals._deleteNode.emit(int(_p.payloads[0]))
 		"SpawnNode":
-			Globals._spawnNode.emit(int(_p.payloads[0]), float(_p.payloads[1]), float(_p.payloads[2]), float(_p.payloads[3]))
+			Globals._spawnNode.emit(int(_p.payloads[0]), float(_p.payloads[1]), float(_p.payloads[2]), float(_p.payloads[3]), int(_p.payloads[4]))
 func LOGIN(_p):
 	match _p.action:
 		"Ok":
@@ -167,11 +170,13 @@ func _handle_client_connected():
 	add_child(_pause)
 	print("Client connected to server!")
 
+func _rock_request(num: int):
+	var p = Packet.new("RockRequest", [num])
+	_network_client.send_packet(p)
 
 func _handle_client_disconnected(was_clean: bool):
 	OS.alert("Disconnected %s" % ["cleanly" if was_clean else "unexpectedly"])
 	get_tree().quit()
-
 
 func _handle_network_data(data: String):
 	print("Received server data: ", data)
@@ -179,6 +184,11 @@ func _handle_network_data(data: String):
 	var p: Packet = Packet.new(action_payloads[0], action_payloads[1])
 	# Pass the packet to our current state
 	state.call(p)
+
+func _delete_node(node_id):
+	var p: Packet = Packet.new("DeleteNode", [node_id])
+	_network_client.send_packet(p)
+	Globals._deleteNode.emit(node_id)
 	
 func _send_movement_data(actor, x, y):
 	if actor == _player_actor:

@@ -23,6 +23,7 @@ Globals="*uid://cp323l7b24yqy"
 
 tree=""
 player=""
+trash="used for minimap"
 
 [input]
 

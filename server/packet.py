@@ -15,7 +15,9 @@ class Action(enum.Enum):
     Character = enum.auto() # User is sending their character data
     Visual = enum.auto() # User is sending their visual data
     SpawnNode = enum.auto() # Server is sending a new node to the client
+    DeleteNode = enum.auto() # Client is sending a node deletion to the Server
     UpdateRocks = enum.auto() # Server is sending an update to the rocks count
+    RockRequest = enum.auto() # Client is requesting to add rocks to their instanced entity
 
 class Packet:
     def __init__(self, action: Action, *payloads):
@@ -72,12 +74,17 @@ class VisualPacket(Packet):
     def __init__(self, anim: int, flip: bool, instance_id: int = None):
         super().__init__(Action.Visual, anim, flip, instance_id)
 class SpawnNodePacket(Packet):
-    def __init__(self, node_type: int, x: float, y: float, respawn_timer: float):
-        super().__init__(Action.SpawnNode, node_type, x, y, respawn_timer)
+    def __init__(self, node_type: int, x: float, y: float, respawn_timer: float, id: int):
+        super().__init__(Action.SpawnNode, node_type, x, y, respawn_timer, id)
 class UpdateRocksPacket(Packet):
     def __init__(self, instance_id: int, rocks: int):
         super().__init__(Action.UpdateRocks, instance_id, rocks)
-
+class DeleteNodePacket(Packet):
+    def __init__(self, node_id: int):
+        super().__init__(Action.DeleteNode, node_id)
+class RockRequestPacket(Packet):
+    def __init__(self, amount: int):
+        super().__init__(Action.RockRequest, amount)
 
 def from_json(json_str: str) -> Packet:
     obj_dict = json.loads(json_str)

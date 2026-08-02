@@ -14,6 +14,8 @@ def direction_to(current: list[float], target: list[float]) -> list[float]:
 
     return [n_x / length, n_y / length]
 
+
+
 def handle_command(command: str, sender: 'GameServerProtocol'):
     message = command.split(" ")
     isAdmin = sender.actor.user.IsAdmin if sender.actor else False
@@ -21,7 +23,7 @@ def handle_command(command: str, sender: 'GameServerProtocol'):
     if message[0] == "/help":
         sender.send_client(packet.ChatPacket("Server", "Player commands: /help, /whoami /whereami"))
         if isAdmin:
-            sender.send_client(packet.ChatPacket("Server", "Admin commands: /tp <x> <y>, /spawntree, /addrocks <amount> [player]"))
+            sender.send_client(packet.ChatPacket("Server", "Admin commands: /tp <x> <y>, /spawntree, /addrocks <amount> [player], /spawntrash"))
     elif message[0] == "/whoami":
         if sender.actor:
             sender.send_client(packet.ChatPacket("Server", f"You are logged in as {sender.actor.user.username}."))
@@ -72,6 +74,27 @@ def handle_command(command: str, sender: 'GameServerProtocol'):
             sender.factory.world_objects.append(new_node)
 
         p = packet.SpawnNodePacket(1, x, y, 30.0)
+  
+        sender.send_client(p) 
+        
+        # Broadcast the network byte data out to all other clients right now
+        if hasattr(sender, 'factory'):
+            for player_protocol in sender.factory.players:
+                if player_protocol != sender and player_protocol.actor is not None:
+                    player_protocol.send_client(p)
+    elif message[0] == "/spawntrash":
+        if not isAdmin:
+            sender.send_client(packet.ChatPacket("Server", "You do not have permission to use this command."))
+            return
+        x = sender.actor.instanced_entity.x if sender.actor and sender.actor.instanced_entity else 0
+        y = sender.actor.instanced_entity.y if sender.actor and sender.actor.instanced_entity else 0
+
+        new_node = models.WorldNode(node_type=2, x=x, y=y, RespawnTimer=30.0)
+        new_node.save()
+        if hasattr(sender, 'factory'):
+            sender.factory.world_objects.append(new_node)
+
+        p = packet.SpawnNodePacket(2, x, y, 30.0)
   
         sender.send_client(p) 
         

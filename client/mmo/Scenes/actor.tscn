@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://v8yh0nvepq2u" path="res://Scripts/actor.gd" id="1_lfvdv"]
 [ext_resource type="SpriteFrames" uid="uid://d25o2vt7d8kcx" path="res://Sprites/SpriteFrames/Frog.tres" id="2_7ei5c"]
 [ext_resource type="FontFile" uid="uid://cpufcof2toydr" path="res://Fonts/Merchant Copy.ttf" id="3_7ei5c"]
+[ext_resource type="FontFile" uid="uid://dkg53607fo08x" path="res://Fonts/Merchant Copy Doublesize.ttf" id="4_k81ir"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_k81ir"]
 font = ExtResource("3_7ei5c")
@@ -13,6 +14,12 @@ shadow_size = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oka2p"]
 size = Vector2(73, 67)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ltbwf"]
+font = ExtResource("4_k81ir")
+font_size = 21
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Actor" type="Node2D" unique_id=424707013]
 script = ExtResource("1_lfvdv")
@@ -55,3 +62,13 @@ offset_right = -32.0
 offset_bottom = -55.0
 size_flags_vertical = 3
 alignment = 2
+
+[node name="InteractText" type="Label" parent="CharacterBody2D" unique_id=1700778876]
+offset_left = -20.0
+offset_top = -34.0
+offset_right = 20.0
+offset_bottom = -7.0
+text = "E"
+label_settings = SubResource("LabelSettings_ltbwf")
+horizontal_alignment = 1
+vertical_alignment = 1

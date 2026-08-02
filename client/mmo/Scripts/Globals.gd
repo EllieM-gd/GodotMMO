@@ -7,11 +7,17 @@ signal _LoginSuccess
 
 signal _player_dc
 
-signal _spawnNode(id: int, x: float, y: float, RespawnTimer: float)
+signal _spawnNode(type: int, x: float, y: float, RespawnTimer: float, id: int)
+signal _deleteNode(id: int)
+
+signal request_rocks(num: int)
 
 signal chatTyping(val: bool)
 
 var localPlayerUsername: String = ""
+# TODO: MAKE SERVER SIDE LATER
+var localRecyclingCount: int = 0
+var localMaxRecyclingCount: int = 3
 
 
 var Characters = [

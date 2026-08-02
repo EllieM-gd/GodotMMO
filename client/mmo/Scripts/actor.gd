@@ -6,6 +6,7 @@ class_name Actor
 @onready var sprite: AnimatedSprite2D = $CharacterBody2D/Sprite2D
 @onready var _camera: Camera2D = $CharacterBody2D/Camera2D
 @onready var chatContainer: VBoxContainer = $CharacterBody2D/ChatContainer
+@onready var interact_text: Label = $CharacterBody2D/InteractText
 
 var chat = preload("res://Scenes/Chat.tscn")
 
@@ -61,6 +62,7 @@ func _ready():
 	label.text = username
 	body.global_position.x = server_position.x
 	body.global_position.y = server_position.y
+	interact_text.visible = false
 	
 	sprite.sprite_frames = Globals.Characters[avatar_id]
 	# Enable camera if local player
@@ -149,6 +151,5 @@ func _physics_process(delta: float) -> void:
 				# A weight of 25.0 or higher makes it snap incredibly fast while keeping a pixel-blend
 				body.global_position = body.global_position.lerp(_network_target_position, 25.0 * delta)
 			
-			
-	
-	
+func _interact_text(status: bool) -> void:
+	interact_text.visible = status

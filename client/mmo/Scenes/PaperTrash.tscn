@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dhnxjawingnqu"]
+
+[ext_resource type="Texture2D" uid="uid://x5j0ugnaqrjm" path="res://Sprites/Trash/crumpled paper 1.png" id="1_l7a0u"]
+[ext_resource type="Script" uid="uid://uwm1oy5lp1ix" path="res://Scripts/trash_pickup.gd" id="2_yp5tw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ah2c"]
+size = Vector2(22, 16)
+
+[node name="Node2D" type="Node2D" unique_id=1050496646 groups=["trash"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=435095898]
+texture_filter = 1
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_l7a0u")
+
+[node name="Interact" type="Area2D" parent="." unique_id=1062766688]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_yp5tw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact" unique_id=469617372]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_8ah2c")

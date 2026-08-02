@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bpyee8rgpj0lk"]
+
+[ext_resource type="Texture2D" uid="uid://ba43dqdp5vlys" path="res://Sprites/Trash/recycling 2.png" id="1_u7bqv"]
+[ext_resource type="Script" uid="uid://obt6t5ace8i4" path="res://Scenes/Interact.gd" id="2_c625n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u7bqv"]
+size = Vector2(16, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c625n"]
+size = Vector2(30, 34)
+
+[node name="Recycling" type="Node2D" unique_id=646870831]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=198629276]
+texture_filter = 1
+texture = ExtResource("1_u7bqv")
+
+[node name="Collision" type="StaticBody2D" parent="." unique_id=1466255514]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision" unique_id=1089587674]
+shape = SubResource("RectangleShape2D_u7bqv")
+
+[node name="Interact" type="Area2D" parent="." unique_id=1253447088]
+collision_mask = 3
+script = ExtResource("2_c625n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact" unique_id=972640363]
+shape = SubResource("RectangleShape2D_c625n")

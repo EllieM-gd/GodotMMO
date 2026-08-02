@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://d148wejunord6" path="res://Addons/addons/dynamic_minimap/icons/icon.png" id="8_ws1hi"]
 [ext_resource type="Texture2D" uid="uid://c1mtgas4g2sa8" path="res://Sprites/Outdoor decoration/Bridge_Wood.png" id="9_b7adt"]
 [ext_resource type="Texture2D" uid="uid://bwhjiy5ujufqm" path="res://Sprites/Outdoor decoration/Outdoor_Decor_Free.png" id="9_ws1hi"]
+[ext_resource type="Texture2D" uid="uid://x5j0ugnaqrjm" path="res://Sprites/Trash/crumpled paper 1.png" id="13_6bwvt"]
+[ext_resource type="PackedScene" uid="uid://bpyee8rgpj0lk" path="res://Scenes/recycling.tscn" id="13_46meq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0"]
 texture = ExtResource("2_00287")
@@ -330,6 +332,12 @@ type = "tree"
 texture = SubResource("AtlasTexture_xicox")
 metadata/_custom_type_script = "uid://b0yj3yg1cgoxq"
 
+[sub_resource type="Resource" id="Resource_q4yjo"]
+script = ExtResource("7_ngcqm")
+type = "trash"
+texture = ExtResource("13_6bwvt")
+metadata/_custom_type_script = "uid://b0yj3yg1cgoxq"
+
 [node name="Map" type="Node2D" unique_id=142629373]
 scale = Vector2(4, 4)
 script = ExtResource("1_r08cw")
@@ -362,6 +370,11 @@ border_width = 3.0
 world_scale = 9000.0
 clamp_to_border = false
 rotate_with_player = false
-icons = Array[ExtResource("7_ngcqm")]([SubResource("Resource_xicox"), SubResource("Resource_bjq7f")])
+icons = Array[ExtResource("7_ngcqm")]([SubResource("Resource_xicox"), SubResource("Resource_bjq7f"), SubResource("Resource_q4yjo")])
 icon_size = 8.0
 use_default_icons = false
+
+[node name="Other" type="Node2D" parent="." unique_id=1276918193]
+
+[node name="Recycling" parent="Other" unique_id=646870831 instance=ExtResource("13_46meq")]
+position = Vector2(126.75, -14.5)
