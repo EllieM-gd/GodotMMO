@@ -18,6 +18,7 @@ mono_crash.*.json
 /server/venv/Lib/site-packages
 /server/venv/Lib
 /server/venv
+**/venv/
 
 # Python cache and local artifacts
 __pycache__/
