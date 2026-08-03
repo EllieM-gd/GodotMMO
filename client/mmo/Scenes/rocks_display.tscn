@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bwhjiy5ujufqm" path="res://Sprites/Outdoor decoration/Outdoor_Decor_Free.png" id="1_0an10"]
 [ext_resource type="Script" uid="uid://dhgvyp85j42ix" path="res://Scenes/rocks_display.gd" id="1_q5fiy"]
 [ext_resource type="FontFile" uid="uid://cpufcof2toydr" path="res://Fonts/Merchant Copy.ttf" id="2_b36vb"]
+[ext_resource type="Texture2D" uid="uid://dgqy7rvt0vi38" path="res://Sprites/Trash/garbage bag 2.png" id="4_rtdl1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b36vb"]
 atlas = ExtResource("1_0an10")
@@ -14,6 +15,14 @@ font_size = 59
 font_color = Color(0.25882354, 0.29803923, 0.43137255, 1)
 outline_size = 7
 outline_color = Color(0.9764706, 0.9019608, 0.8117647, 1)
+shadow_size = 14
+shadow_color = Color(0.10980392, 0.10980392, 0.10980392, 0.31764707)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ek2bv"]
+font = ExtResource("2_b36vb")
+font_size = 40
+font_color = Color(0.25882354, 0.29803923, 0.43137255, 1)
+outline_size = 7
 shadow_size = 14
 shadow_color = Color(0.10980392, 0.10980392, 0.10980392, 0.31764707)
 
@@ -29,22 +38,22 @@ script = ExtResource("1_q5fiy")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1641557866]
 layer = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=2127752463]
+[node name="Rocks" type="HBoxContainer" parent="CanvasLayer" unique_id=2127752463]
 offset_right = 78.0
 offset_bottom = 44.0
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer" unique_id=42432214]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Rocks" unique_id=42432214]
 texture_filter = 1
 layout_mode = 2
 texture = SubResource("AtlasTexture_b36vb")
 expand_mode = 2
 
-[node name="VSeparator" type="VSeparator" parent="CanvasLayer/HBoxContainer" unique_id=1899673821]
+[node name="VSeparator" type="VSeparator" parent="CanvasLayer/Rocks" unique_id=1899673821]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(8, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/HBoxContainer" unique_id=1434755491]
+[node name="Label" type="Label" parent="CanvasLayer/Rocks" unique_id=1434755491]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.25882354, 0.29803923, 0.43137255, 1)
 theme_override_colors/font_outline_color = Color(0.9764706, 0.9019608, 0.8117647, 1)
@@ -52,3 +61,24 @@ theme_override_constants/outline_size = 11
 theme_override_font_sizes/font_size = 31
 text = "0"
 label_settings = SubResource("LabelSettings_q5fiy")
+
+[node name="Trash" type="HBoxContainer" parent="CanvasLayer" unique_id=362263592]
+offset_top = 48.0
+offset_right = 40.0
+offset_bottom = 88.0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Trash" unique_id=2095005851]
+texture_filter = 1
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+texture = ExtResource("4_rtdl1")
+flip_h = true
+
+[node name="Label" type="Label" parent="CanvasLayer/Trash" unique_id=935025262]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.25882354, 0.29803923, 0.43137255, 1)
+theme_override_colors/font_outline_color = Color(0.9764706, 0.9019608, 0.8117647, 1)
+theme_override_constants/outline_size = 11
+theme_override_font_sizes/font_size = 31
+text = "0/3"
+label_settings = SubResource("LabelSettings_ek2bv")

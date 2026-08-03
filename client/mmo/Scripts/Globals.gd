@@ -15,7 +15,9 @@ signal request_rocks(num: int)
 signal chatTyping(val: bool)
 
 var localPlayerUsername: String = ""
+
 # TODO: MAKE SERVER SIDE LATER
+signal update_trash(num: int)
 var localRecyclingCount: int = 0
 var localMaxRecyclingCount: int = 3
 

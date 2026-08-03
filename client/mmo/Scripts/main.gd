@@ -132,6 +132,7 @@ func _update_actor(model_id: int, model_data: Dictionary):
 			_player_actor = new_actor
 			_player_actor.is_player = true  
 			_player_actor.MainReference = self
+			_rocks._update(model_data["instanced_entity"]["Rocks"])
 			if _map != null:
 				var minimap = _map.find_child("MiniMap").find_child("Control")
 				if minimap != null:

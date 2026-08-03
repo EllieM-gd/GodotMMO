@@ -27,6 +27,7 @@ func _interact():
 		Globals.request_rocks.emit(Globals.localRecyclingCount)
 		Globals.localRecyclingCount = 0
 		# TODO: Visual Indicator
+		Globals.update_trash.emit(0)
 	else:
 		print("No Recycling to recycle")
 
