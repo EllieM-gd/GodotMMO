@@ -1,9 +1,8 @@
 # Godot 4+ specific ignores
 .godot/
-.nomedia
-
-# Godot-specific ignores
+**/.godot/
 .import/
+**/.import/
 export.cfg
 export_credentials.cfg
 
@@ -16,7 +15,8 @@ data_*/
 mono_crash.*.json
 
 # Python virtual environment
-server/venv/
+venv/
+**/venv/
 
 # Python cache and local artifacts
 __pycache__/
