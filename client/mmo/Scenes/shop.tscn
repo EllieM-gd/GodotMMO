@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://c1ua0io0lhhcs"]
+
+[ext_resource type="FontFile" uid="uid://rwteq26fe6oc" path="res://Fonts/Merchant Copy Wide.ttf" id="1_a0mxf"]
+[ext_resource type="Script" uid="uid://pe8b86u8fbvx" path="res://Scenes/shop_parent.gd" id="1_io27d"]
+[ext_resource type="PackedScene" uid="uid://c3x3dlyvhxhho" path="res://Scenes/shop_item.tscn" id="2_2shtd"]
+[ext_resource type="FontFile" uid="uid://dkg53607fo08x" path="res://Fonts/Merchant Copy Doublesize.ttf" id="4_fdj0q"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2shtd"]
+font = ExtResource("1_a0mxf")
+font_size = 80
+outline_size = 11
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6jq0"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.9443033, 0.11089934, 0.109023996, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ps1r"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.41731745, 0.017700613, 0.020621259, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymrm4"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.9863232, 0.23955306, 0.20318148, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1799128891]
+script = ExtResource("1_io27d")
+
+[node name="Shop" type="Control" parent="." unique_id=1658433762]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Shop" unique_id=890860627]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.1
+anchor_right = 0.7
+anchor_bottom = 0.8
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Shop/Panel" unique_id=1565711625]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_right = 0.7
+anchor_bottom = 0.1
+offset_right = 40.0
+offset_bottom = 23.0
+text = "SHOP"
+label_settings = SubResource("LabelSettings_2shtd")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="Shop/Panel" unique_id=52535763]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.175
+anchor_right = 0.85
+anchor_bottom = 0.9
+offset_right = 57.360046
+offset_bottom = 158.13998
+columns = 3
+
+[node name="ShopItem" parent="Shop/Panel/GridContainer" unique_id=727535265 instance=ExtResource("2_2shtd")]
+layout_mode = 2
+text = "Rock Club
+Earn more rocks while recycling
+10 Rocks"
+icon = null
+vertical_icon_alignment = 1
+expand_icon = true
+shop_item = "Rock Club"
+description = "Earn more rocks while recycling"
+cost = [10, 25, 100, 350]
+
+[node name="VScrollBar" type="VScrollBar" parent="Shop/Panel" unique_id=1379393483]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Button" type="Button" parent="Shop/Panel" unique_id=706607607]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_fdj0q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_k6jq0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3ps1r")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ymrm4")
+text = " X "
+
+[connection signal="pressed" from="Shop/Panel/Button" to="." method="_on_button_pressed"]

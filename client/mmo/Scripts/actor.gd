@@ -30,6 +30,7 @@ var username: String = ""
 
 var canSend: bool = true
 var sendDelay: float = 0
+var canMove: bool = true
 
 @export var speed: float = 100
 var inputEnabled: bool = true
@@ -69,6 +70,8 @@ func _ready():
 	if is_player:
 		sprite.z_index = 5 # Ensure Local player is always on top
 		_camera.enabled = true
+		Globals.openShop.connect(func(): canMove = false)
+		Globals.closeShop.connect(func(): canMove = true)
 		Globals.localPlayerUsername = username
 		Globals.chatTyping.connect(toggleInput)
 func toggleInput(val: bool):
@@ -111,13 +114,10 @@ func _physics_process(delta: float) -> void:
 	if is_player:
 		var x_direction = Input.get_axis("left","right")
 		var y_direction = Input.get_axis("up", "down")
-		body.velocity.x = x_direction * speed
-		body.velocity.y = y_direction * speed
-		#if x_direction == 0:
-			#body.velocity.x = move_toward(body.velocity.x, 0, delta * speed)
-		#if y_direction == 0:
-			#body.velocity.y = move_toward(body.velocity.y, 0, delta * speed)
-		body.move_and_slide()
+		if canMove:
+			body.velocity.x = x_direction * speed
+			body.velocity.y = y_direction * speed
+			body.move_and_slide()
 		
 		if lastPositionSent != Vector2(body.global_position.x, body.global_position.y):
 			# Set state to walking

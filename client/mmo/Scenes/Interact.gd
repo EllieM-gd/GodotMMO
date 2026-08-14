@@ -8,14 +8,15 @@ func _ready() -> void:
 	body_exited.connect(_body_left)
 
 func _body_entered(body: Node2D):
-	if body.get_parent().has_method("_interact_text"):
+	print(body)
+	if body.is_in_group("player"):
 		body = body.get_parent()
 		if body.is_player:
 			local_player = true
 			body._interact_text(true)
 
 func _body_left(body: Node2D):
-	if body.get_parent().has_method("_interact_text"):
+	if body.is_in_group("player"):
 		body = body.get_parent()
 		if body.is_player:
 			local_player = false

@@ -6,6 +6,7 @@ extends Control
 
 func _update(val: int):
 	textDisplay.text = str(val)
+	Globals.rock_count = val
 
 
 func _ready() -> void:

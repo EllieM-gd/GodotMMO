@@ -22,20 +22,23 @@ outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Actor" type="Node2D" unique_id=424707013]
+y_sort_enabled = true
 script = ExtResource("1_lfvdv")
 speed = 250.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=634379699 groups=["player"]]
+y_sort_enabled = true
 collision_layer = 2
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1288417270]
+y_sort_enabled = true
 texture_filter = 1
 scale = Vector2(7, 7)
 sprite_frames = ExtResource("2_7ei5c")
 animation = &"Idle"
 
 [node name="Label" type="Label" parent="CharacterBody2D" unique_id=412814388]
-z_index = 10
+z_index = 5
 custom_minimum_size = Vector2(100, 0)
 offset_left = -115.0
 offset_top = 60.0
@@ -44,26 +47,32 @@ offset_bottom = 83.0
 text = "Placeholder"
 label_settings = SubResource("LabelSettings_k81ir")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=1446881189]
+y_sort_enabled = true
 enabled = false
 drag_horizontal_enabled = true
 drag_left_margin = 0.3
 drag_top_margin = 0.3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1046542516]
+y_sort_enabled = true
 position = Vector2(5.5, 23.5)
 shape = SubResource("RectangleShape2D_oka2p")
 
 [node name="ChatContainer" type="VBoxContainer" parent="CharacterBody2D" unique_id=1632238318]
+y_sort_enabled = true
 offset_left = -72.0
 offset_top = -95.0
 offset_right = -32.0
 offset_bottom = -55.0
 size_flags_vertical = 3
 alignment = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="InteractText" type="Label" parent="CharacterBody2D" unique_id=1700778876]
+z_index = 5
 offset_left = -20.0
 offset_top = -34.0
 offset_right = 20.0
@@ -72,3 +81,4 @@ text = "E"
 label_settings = SubResource("LabelSettings_ltbwf")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true

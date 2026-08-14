@@ -31,7 +31,6 @@ class GameFactory(WebSocketServerFactory):
     def spawn_trash(self):
         # Check if there are any players in the game
         if len(self.players) == 0:
-            print("No players in the game. Not spawning new trash node.")
             return
         # Get current trash count
         trash_count = len([node for node in self.world_objects if node.node_type == 2])

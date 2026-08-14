@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c2djmfkmw4xlj" path="res://Scenes/connecting.tscn" id="3_8gbba"]
 
 [node name="Main" type="Node2D" unique_id=129074620]
+y_sort_enabled = true
 script = ExtResource("1_ig7tw")
 
 [node name="Login" parent="." unique_id=349224493 instance=ExtResource("2_0xm2m")]

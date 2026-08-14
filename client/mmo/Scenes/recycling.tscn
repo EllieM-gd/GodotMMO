@@ -10,12 +10,15 @@ size = Vector2(16, 20)
 size = Vector2(30, 34)
 
 [node name="Recycling" type="Node2D" unique_id=646870831]
+y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=198629276]
+y_sort_enabled = true
 texture_filter = 1
 texture = ExtResource("1_u7bqv")
 
 [node name="Collision" type="StaticBody2D" parent="." unique_id=1466255514]
+y_sort_enabled = true
 collision_layer = 3
 collision_mask = 3
 
@@ -23,6 +26,7 @@ collision_mask = 3
 shape = SubResource("RectangleShape2D_u7bqv")
 
 [node name="Interact" type="Area2D" parent="." unique_id=1253447088]
+y_sort_enabled = true
 collision_mask = 3
 script = ExtResource("2_c625n")
 

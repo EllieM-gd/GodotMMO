@@ -71,6 +71,7 @@ func PLAY(_p):
 		"UpdateRocks":
 			if _rocks != null and _actors[int(_p.payloads[0])] == _player_actor:
 				_rocks._update(int(_p.payloads[1]))
+				Globals.rock_count = int(_p.payloads[1])
 		"DeleteNode":
 			Globals._deleteNode.emit(int(_p.payloads[0]))
 		"SpawnNode":

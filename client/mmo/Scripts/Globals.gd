@@ -11,6 +11,7 @@ signal _spawnNode(type: int, x: float, y: float, RespawnTimer: float, id: int)
 signal _deleteNode(id: int)
 
 signal request_rocks(num: int)
+var rock_count: int = 0
 
 signal chatTyping(val: bool)
 
@@ -20,6 +21,8 @@ var localPlayerUsername: String = ""
 signal update_trash(num: int)
 var localRecyclingCount: int = 0
 var localMaxRecyclingCount: int = 3
+signal openShop
+signal closeShop
 
 
 var Characters = [

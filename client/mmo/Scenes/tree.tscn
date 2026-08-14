@@ -11,18 +11,22 @@ size = Vector2(12, 3.75)
 
 [node name="Tree" type="Node2D" unique_id=774949438 groups=["tree"]]
 z_index = 6
+y_sort_enabled = true
 script = ExtResource("1_rsuno")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=172688438]
+y_sort_enabled = true
 texture_filter = 1
 texture = ExtResource("2_l7sa7")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2068719837]
+y_sort_enabled = true
 collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2114327503]
 z_index = 5
+y_sort_enabled = true
 position = Vector2(0, -6.5)
 shape = SubResource("RectangleShape2D_l3oha")
 
@@ -30,8 +34,10 @@ shape = SubResource("RectangleShape2D_l3oha")
 wait_time = 10.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=694577426]
+y_sort_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=571041620]
+y_sort_enabled = true
 position = Vector2(0, 17.5)
 scale = Vector2(1, 0.8)
 shape = SubResource("RectangleShape2D_rsuno")
