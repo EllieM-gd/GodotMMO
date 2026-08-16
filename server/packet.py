@@ -18,6 +18,8 @@ class Action(enum.Enum):
     DeleteNode = enum.auto() # Client is sending a node deletion to the Server
     UpdateRocks = enum.auto() # Server is sending an update to the rocks count
     RockRequest = enum.auto() # Client is requesting to add rocks to their instanced entity
+    PurchaseRequest = enum.auto() # Client is requesting to purchase an upgrade
+    NewUpgrade = enum.auto() # Server is sending a new upgrade to the client
 
 class Packet:
     def __init__(self, action: Action, *payloads):
@@ -85,6 +87,13 @@ class DeleteNodePacket(Packet):
 class RockRequestPacket(Packet):
     def __init__(self, amount: int):
         super().__init__(Action.RockRequest, amount)
+class PurchaseRequestPacket(Packet):
+    def __init__(self, upgrade_id: str, cost: int):
+        super().__init__(Action.PurchaseRequest, upgrade_id, cost)
+class NewUpgradePacket(Packet):
+    def __init__(self, upgrade_id: str):
+        super().__init__(Action.NewUpgrade, upgrade_id)
+
 
 def from_json(json_str: str) -> Packet:
     obj_dict = json.loads(json_str)

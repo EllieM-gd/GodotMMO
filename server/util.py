@@ -3,7 +3,8 @@ import math
 from server import packet
 from server import models
 from server.protocol import GameServerProtocol
-
+from django.db import transaction
+## Unused???
 def direction_to(current: list[float], target: list[float]) -> list[float]:
     if target == current:
         return [0, 0]
@@ -15,7 +16,7 @@ def direction_to(current: list[float], target: list[float]) -> list[float]:
     return [n_x / length, n_y / length]
 
 
-
+## COMMANDS
 def handle_command(command: str, sender: 'GameServerProtocol'):
     message = command.split(" ")
     isAdmin = sender.actor.user.IsAdmin if sender.actor else False

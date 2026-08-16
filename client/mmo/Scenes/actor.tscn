@@ -13,7 +13,7 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oka2p"]
-size = Vector2(73, 67)
+size = Vector2(73, 40)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ltbwf"]
 font = ExtResource("4_k81ir")
@@ -58,7 +58,7 @@ drag_top_margin = 0.3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1046542516]
 y_sort_enabled = true
-position = Vector2(5.5, 23.5)
+position = Vector2(5.5, 37)
 shape = SubResource("RectangleShape2D_oka2p")
 
 [node name="ChatContainer" type="VBoxContainer" parent="CharacterBody2D" unique_id=1632238318]

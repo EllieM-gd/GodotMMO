@@ -28,6 +28,7 @@ func _ready():
 	_network_client.connect("error", self._handle_network_error)
 	_network_client.connect("data", self._handle_network_data)
 	Globals.request_rocks.connect(_rock_request)
+	Globals.MakePurchase.connect(_makePurchase)
 	add_child(_network_client)
 	_network_client.connect_to_server("127.0.0.1", 8081)
 	
@@ -43,6 +44,10 @@ func NONE(_p):
 
 func PLAY(_p):
 	match _p.action:
+		"Ok":
+			Globals.OK.emit()
+		"Deny":
+			Globals.NO.emit(_p.payloads[0])
 		"Chat": # If the packet is a chat message
 			var sender: String = _p.payloads[0]
 			var message: String = _p.payloads[1] # Grab the message from paylaods
@@ -72,6 +77,8 @@ func PLAY(_p):
 			if _rocks != null and _actors[int(_p.payloads[0])] == _player_actor:
 				_rocks._update(int(_p.payloads[1]))
 				Globals.rock_count = int(_p.payloads[1])
+		"NewUpgrade":
+			Globals.NewUpgrade.emit(_p.payloads[0])
 		"DeleteNode":
 			Globals._deleteNode.emit(int(_p.payloads[0]))
 		"SpawnNode":
@@ -100,6 +107,10 @@ func REGISTER(_p):
 
 
 ## FUNCTIONS
+
+func _makePurchase(id, cost):
+	var p: Packet = Packet.new("PurchaseRequest", [id, cost]) # Create packet
+	_network_client.send_packet(p) # Send packet
 
 func _enter_game():
 	state = Callable(self, "PLAY")
@@ -134,6 +145,8 @@ func _update_actor(model_id: int, model_data: Dictionary):
 			_player_actor.is_player = true  
 			_player_actor.MainReference = self
 			_rocks._update(model_data["instanced_entity"]["Rocks"])
+			for upgrade in model_data["instanced_entity"]["purchased_upgrades"]:
+				Globals.NewUpgrade.emit(upgrade)
 			if _map != null:
 				var minimap = _map.find_child("MiniMap").find_child("Control")
 				if minimap != null:

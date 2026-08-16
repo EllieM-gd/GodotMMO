@@ -1,5 +1,7 @@
 import math
 import queue
+
+from django.db import transaction
 import packet
 import util
 import time
@@ -86,6 +88,19 @@ class GameServerProtocol(WebSocketServerProtocol):
                 # Send an update to the player about their new rock count
                 update_packet = packet.UpdateRocksPacket(instanced_entity.entity.id, instanced_entity.Rocks)
                 self.send_client(update_packet)
+        elif p.action == packet.Action.PurchaseRequest:
+            if sender != self: return
+            if self.purchase_upgrade(self.actor.instanced_entity.id, p.payloads[0], p.payloads[1]):
+                # Send an update to the player about their new rock count
+                update_packet = packet.UpdateRocksPacket(self.actor.instanced_entity.entity.id, self.actor.instanced_entity.Rocks)
+                self.send_client(update_packet)
+                # Send an update to the player about their purchased upgrades
+                new_upgrade_packet = packet.NewUpgradePacket(p.payloads[0])
+                self.send_client(new_upgrade_packet)
+                # Send OK Packet
+                self.send_client(packet.OkPacket())
+            else:
+                self.send_client(packet.DenyPacket("Purchase failed. Check if you have enough rocks or if the upgrade is already owned."))
         else:
             print(f"Unhandled packet in PLAY state: {p}")
 
@@ -231,3 +246,24 @@ class GameServerProtocol(WebSocketServerProtocol):
     def send_client(self, p: packet.Packet):
         b = bytes(p)
         self.sendMessage(b)
+
+    def purchase_upgrade(self, instanced_entity_id: int, upgrade_id: str, cost: int) -> bool:
+        # Use atomic transaction to avoid race conditions with currency
+        with transaction.atomic():
+            player = self.actor.instanced_entity
+            
+            # Ensure purchased_upgrades is initialized
+            if player.purchased_upgrades is None:
+                player.purchased_upgrades = []
+
+            # Check if player has enough currency
+            if player.Rocks < cost:
+                return False  # Insufficient funds
+
+            # Process purchase
+            player.Rocks -= cost
+            player.purchased_upgrades.append(upgrade_id)
+            
+            # Save both fields back to the database
+            player.save()
+            return True

@@ -34,6 +34,7 @@ class InstancedEntity(models.Model):
     x = models.FloatField()
     y = models.FloatField()
     Rocks = models.IntegerField(default=0)
+    purchased_upgrades = models.JSONField(default=list, blank=True)
 
 class Actor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

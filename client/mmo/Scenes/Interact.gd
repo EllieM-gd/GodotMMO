@@ -25,7 +25,7 @@ func _body_left(body: Node2D):
 func _interact():
 	if Globals.localRecyclingCount > 0:
 		# Send rocks request, then reset value
-		Globals.request_rocks.emit(Globals.localRecyclingCount)
+		Globals.request_rocks.emit(Globals.localRecyclingCount * Globals.RecyclingMultiplier)
 		Globals.localRecyclingCount = 0
 		# TODO: Visual Indicator
 		Globals.update_trash.emit(0)

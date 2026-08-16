@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://pe8b86u8fbvx" path="res://Scenes/shop_parent.gd" id="1_io27d"]
 [ext_resource type="PackedScene" uid="uid://c3x3dlyvhxhho" path="res://Scenes/shop_item.tscn" id="2_2shtd"]
 [ext_resource type="FontFile" uid="uid://dkg53607fo08x" path="res://Fonts/Merchant Copy Doublesize.ttf" id="4_fdj0q"]
+[ext_resource type="Script" uid="uid://canj7u5qntamd" path="res://Scenes/RockClubShop.gd" id="4_k6jq0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2shtd"]
 font = ExtResource("1_a0mxf")
@@ -99,12 +100,26 @@ layout_mode = 2
 text = "Rock Club
 Earn more rocks while recycling
 10 Rocks"
-icon = null
 vertical_icon_alignment = 1
 expand_icon = true
+script = ExtResource("4_k6jq0")
+shop_id = "RockClub"
 shop_item = "Rock Club"
 description = "Earn more rocks while recycling"
-cost = [10, 25, 100, 350]
+cost = Array[int]([10, 25, 100, 350])
+
+[node name="ShopItem2" parent="Shop/Panel/GridContainer" unique_id=1608478367 instance=ExtResource("2_2shtd")]
+layout_mode = 2
+text = "Bigger Bag
+Hold more trash at once!
+5 Rocks"
+vertical_icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_k6jq0")
+shop_id = "Bag"
+shop_item = "Bigger Bag"
+description = "Hold more trash at once!"
+cost = Array[int]([5, 20, 75])
 
 [node name="VScrollBar" type="VScrollBar" parent="Shop/Panel" unique_id=1379393483]
 layout_mode = 0

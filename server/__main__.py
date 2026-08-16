@@ -44,7 +44,7 @@ class GameFactory(WebSocketServerFactory):
             new_node.save()
             self.world_objects.append(new_node)
 
-            p = protocol.packet.SpawnNodePacket(2, x, y, 30.0, new_node.id)
+            p = protocol.packet.SpawnNodePacket(2, x, y, -1, new_node.id)
             for player_protocol in self.players:
                 if player_protocol.actor is not None:
                     player_protocol.send_client(p)
