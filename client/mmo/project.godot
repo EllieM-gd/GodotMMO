@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 Globals="*uid://cp323l7b24yqy"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [global_group]
 
 tree=""

@@ -52,10 +52,12 @@ func _login():
 	register_button.disabled = true
 	login.emit(username_field.text, password_field.text)
 	registration_response.text = "Logging in..."
-func _loginFailed():
+func _loginFailed(reason = ""):
 	register_button.disabled = false
 	login_button.disabled = false
 	registration_response.text = "Login Failed."
+	if len(reason) > 0:
+		registration_response.text += "\n" + reason
 func _loginSuccess():
 	registration_response.text = "Joining Game!"
 
@@ -67,10 +69,12 @@ func _register():
 func _register_confirmed():
 	panel.visible = true
 	registration_response.text = "REGISTRATION SUCCESSFUL\nPLEASE SELECT CHARACTER"
-func _register_denied():
+func _register_denied(reason):
 	login_button.disabled = false
 	register_button.disabled = false
 	registration_response.text = "REGISTRATION FAILED :("
+	if len(reason) > 0:
+		registration_response.text += "\n" + reason
 
 
 func _Character_selected():

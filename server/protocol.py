@@ -25,6 +25,9 @@ class GameServerProtocol(WebSocketServerProtocol):
                 if msg[1].startswith('/'):
                     util.handle_command(msg[1], self)
                 else:
+                    clean_msg = self.factory.filter.censor(p.payloads[1])
+                    p = packet.ChatPacket(p.payloads[0], clean_msg)
+                    print("NEW CHAT MESSAGE:", p.payloads)
                     self.broadcast(p, exclude_self=True)
             else:
                 self.send_client(p)
@@ -106,6 +109,10 @@ class GameServerProtocol(WebSocketServerProtocol):
 
     def LOGIN(self, sender: 'GameServerProtocol', p: packet.Packet):
         if p.action == packet.Action.Login:
+            if len(self.factory.players) >= 50:
+                print(f"Server is full. Current players: {len(self.factory.players)}")
+                self.send_client(packet.DenyPacket("Server is full. Please try again later."))
+                return
             username, password = p.payloads
             if models.User.objects.filter(username=username, password=password).exists():
                 user = models.User.objects.get(username=username, password=password)
@@ -115,7 +122,7 @@ class GameServerProtocol(WebSocketServerProtocol):
                     self.actor.save()
 
                 if self not in self.factory.players:
-                    self.factory.players.append(self)
+                    self.factory.players.add(self)
 
                 self.send_client(packet.OkPacket())
                 self.send_client(packet.ModelDataPacket(models.create_dict(self.actor)))
@@ -135,6 +142,10 @@ class GameServerProtocol(WebSocketServerProtocol):
             if models.User.objects.filter(username=username).exists():
                 self.send_client(packet.DenyPacket("Username already exists"))
             else:
+                # Check if the username contains profanity
+                if self.factory.filter.contains_profanity(username):
+                    self.send_client(packet.DenyPacket("Username contains inappropriate language"))
+                    return
                 # Create a user for login
                 user = models.User(username=username, password=password)
                 user.save()

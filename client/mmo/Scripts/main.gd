@@ -88,9 +88,9 @@ func LOGIN(_p):
 		"Ok":
 			_enter_game()
 		"Deny":
-			Globals._LoginFailed.emit()
 			var reason: String = _p.payloads[0]
-			OS.alert(reason)
+			Globals._LoginFailed.emit(reason)
+			#OS.alert(reason)
 			state = Callable(self, "NONE")
 			
 func REGISTER(_p):
@@ -99,8 +99,8 @@ func REGISTER(_p):
 			Globals._RegisterConfirmed.emit()
 			OS.alert("Registration Complete")
 		"Deny":
-			Globals._RegisterDenied.emit()
 			var reason: String = _p.payloads[0]
+			Globals._RegisterDenied.emit(reason)
 			OS.alert(reason)
 			state = Callable(self, "NONE")
 
@@ -145,15 +145,15 @@ func _update_actor(model_id: int, model_data: Dictionary):
 			_player_actor.is_player = true  
 			_player_actor.MainReference = self
 			_rocks._update(model_data["instanced_entity"]["Rocks"])
-			for upgrade in model_data["instanced_entity"]["purchased_upgrades"]:
-				Globals.NewUpgrade.emit(upgrade)
 			if _map != null:
 				var minimap = _map.find_child("MiniMap").find_child("Control")
 				if minimap != null:
-					print("Setting up minimap: ", str(minimap))
 					minimap.player_node = new_actor.get_child(0)
 		_actors[model_id] = new_actor
 		add_child(new_actor)
+		if new_actor.is_player:
+			for upgrade in model_data["instanced_entity"]["purchased_upgrades"]:
+				Globals.NewUpgrade.emit(upgrade)
 	
 
 func _handle_login_button(username: String, password: String):
@@ -194,8 +194,9 @@ func _handle_client_disconnected(was_clean: bool):
 	get_tree().quit()
 
 func _handle_network_data(data: String):
-	print("Received server data: ", data)
 	var action_payloads: Array = Packet.json_to_action_payloads(data)
+	if action_payloads[0] != "Movement" and action_payloads[0] != "Visual":
+		print("Received server data: ", data)
 	var p: Packet = Packet.new(action_payloads[0], action_payloads[1])
 	# Pass the packet to our current state
 	state.call(p)

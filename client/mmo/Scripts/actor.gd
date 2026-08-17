@@ -7,6 +7,7 @@ class_name Actor
 @onready var _camera: Camera2D = $CharacterBody2D/Camera2D
 @onready var chatContainer: VBoxContainer = $CharacterBody2D/ChatContainer
 @onready var interact_text: Label = $CharacterBody2D/InteractText
+@onready var SpeedButton: Button = $CanvasLayer/SpeedButton
 
 var chat = preload("res://Scenes/Chat.tscn")
 
@@ -32,11 +33,26 @@ var canSend: bool = true
 var sendDelay: float = 0
 var canMove: bool = true
 
-@export var speed: float = 100
+@export var speed: float = 250
+var speedIncrease = [1.0]
+var speedIndex = 0
 var inputEnabled: bool = true
 
 var _network_target_position: Vector2 = Vector2.ZERO
 var _has_received_position: bool = false
+
+func next_speed():
+	if speedIndex >= len(speedIncrease) - 1:
+		speedIndex = 0
+	else:
+		speedIndex += 1
+	SpeedButton.text = str(speedIncrease[speedIndex]) + "x"
+		
+func add_speed(newSpeed: float):
+	if newSpeed not in speedIncrease:
+		speedIncrease.append(newSpeed)
+	print("ADDING SPEED ")
+	SpeedButton.visible = true
 
 func update(new_model: Dictionary):
 	var ientity = new_model["instanced_entity"]
@@ -72,6 +88,7 @@ func _ready():
 		_camera.enabled = true
 		Globals.openShop.connect(func(): canMove = false)
 		Globals.closeShop.connect(func(): canMove = true)
+		Globals.newSpeed.connect(add_speed)
 		Globals.localPlayerUsername = username
 		Globals.chatTyping.connect(toggleInput)
 func toggleInput(val: bool):
@@ -115,8 +132,8 @@ func _physics_process(delta: float) -> void:
 		var x_direction = Input.get_axis("left","right")
 		var y_direction = Input.get_axis("up", "down")
 		if canMove:
-			body.velocity.x = x_direction * speed
-			body.velocity.y = y_direction * speed
+			body.velocity.x = x_direction * (speed * speedIncrease[speedIndex])
+			body.velocity.y = y_direction * (speed * speedIncrease[speedIndex])
 			body.move_and_slide()
 		
 		if lastPositionSent != Vector2(body.global_position.x, body.global_position.y):

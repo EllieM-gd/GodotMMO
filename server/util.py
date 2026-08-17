@@ -4,6 +4,18 @@ from server import packet
 from server import models
 from server.protocol import GameServerProtocol
 from django.db import transaction
+
+
+class area:
+    def __init__(self, x1: float, y1: float, x2: float, y2: float):
+        self.min_x = min(x1, x2)
+        self.max_x = max(x1, x2)
+        self.min_y = min(y1, y2)
+        self.max_y = max(y1, y2)
+
+    def contains(self, x: float, y: float) -> bool:
+        return (self.min_x <= x <= self.max_x) and (self.min_y <= y <= self.max_y)
+
 ## Unused???
 def direction_to(current: list[float], target: list[float]) -> list[float]:
     if target == current:

@@ -8,7 +8,6 @@ func _ready() -> void:
 	body_exited.connect(_body_left)
 
 func _body_entered(body: Node2D):
-	print(body)
 	if body.is_in_group("player"):
 		body = body.get_parent()
 		if body.is_player:

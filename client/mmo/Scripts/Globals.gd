@@ -1,8 +1,8 @@
 extends Node
 
 signal _RegisterConfirmed
-signal _RegisterDenied
-signal _LoginFailed
+signal _RegisterDenied(reason: String)
+signal _LoginFailed(reason: String)
 signal _LoginSuccess
 signal OK
 signal NO(reason: String)
@@ -29,6 +29,7 @@ signal closeShop
 signal shopWaiting(val:bool)
 signal MakePurchase(id: String, cost: int)
 signal NewUpgrade(id: String)
+signal newSpeed(newVal: float)
 
 func _ready():
 	NewUpgrade.connect(newUpgrade)
@@ -48,3 +49,5 @@ func newUpgrade(upgrade: String):
 	elif upgrade.substr(0, upgrade.length() - 2) == "Bag":
 		localMaxRecyclingCount = 3 + int(upgrade[-1])
 		update_trash.emit(localRecyclingCount)
+	elif upgrade.substr(0, upgrade.length() - 2) == "Speed":
+		newSpeed.emit(1 + (float(upgrade[-1]) * .2))

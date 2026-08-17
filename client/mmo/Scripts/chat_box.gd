@@ -2,10 +2,13 @@ extends Control
 
 @onready var chat_log = $CanvasLayer/VBoxContainer/RichTextLabel
 @onready var input_field = $CanvasLayer/VBoxContainer/HBoxContainer/LineEdit
-
+@onready var hbox = $CanvasLayer/VBoxContainer/HBoxContainer
 signal message_sent(message)
 
 
+func _toggleVisible():
+	hbox.visible = not hbox.visible
+	chat_log.visible = not chat_log.visible
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_pressed():

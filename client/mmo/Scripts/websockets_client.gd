@@ -55,7 +55,8 @@ func _on_data():
 
 func _send_string(string: String) -> void:
 	_client.put_packet(string.to_utf8_buffer())
-	print("Sent string: ", string)
+	if not "Movement" in string and not "Visual" in string: 
+		print("Sent string: ", string)
 
 func player_disconnect():
 	_client.close(1000, "Player Disconnected")

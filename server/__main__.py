@@ -5,8 +5,13 @@ import protocol
 from twisted.python import log
 from twisted.internet import reactor, task
 from autobahn.twisted.websocket import WebSocketServerFactory
+from better_profanity import profanity
 
 from server import models
+import util
+
+###                  Pond 1                                         Left Side of map                    Pond 2                              House 1                         House 2
+UnaccessableAreas = [util.area(1555.5, -599.08, 2024.51, -200.83), util.area(-1472, -696, -128, 1984), util.area(528, -2352, 1280, -1858), util.area(3136, -64, 3456, 256), util.area(3968, -192, 4800, 320)]
 
 
 class GameFactory(WebSocketServerFactory):
@@ -14,8 +19,11 @@ class GameFactory(WebSocketServerFactory):
         self.protocol = protocol.GameServerProtocol
         super().__init__(f"ws://{hostname}:{port}")
         self.tickrate: int = 20
-
+        self.unconnected_protocols: set[protocol.GameServerProtocol] = set()
         self.players: set[protocol.GameServerProtocol] = set()
+
+        self.filter = profanity
+
 
         self.world_objects: list[models.WorldNode] = list(models.WorldNode.objects.all())
 
@@ -25,7 +33,7 @@ class GameFactory(WebSocketServerFactory):
         trashloop.start(10)  # Every 10 seconds
 
     def tick(self):
-        for p in self.players:
+        for p in self.unconnected_protocols:
             p.tick()
 
     def spawn_trash(self):
@@ -33,33 +41,35 @@ class GameFactory(WebSocketServerFactory):
         if len(self.players) == 0:
             return
         # Get current trash count
-        trash_count = len([node for node in self.world_objects if node.node_type == 2])
+        trash_count = min(len([node for node in self.world_objects if node.node_type == 2]), 50)  # Limit to 50 trash nodes
         # 3 Trash nodes per player
         if trash_count < len(self.players) * 3:
-            print("Trash Count:", trash_count, "Players:", len(self.players), "Spawning new trash node.")
             # Spawn a new trash node at a random position
-            x = random.uniform(0, 3000)
-            y = random.uniform(-1800, 2000)
+            x = random.uniform(-1280, 5000)
+            y = random.uniform(-2176, 2000)
+            # Dont let it spawn in unaccessable areas
+            while any(area.contains(x, y) for area in UnaccessableAreas):
+                x = random.uniform(-1280, 5000)
+                y = random.uniform(-2176, 2000)
             new_node = models.WorldNode(node_type=2, x=x, y=y, RespawnTimer=30.0)
             new_node.save()
             self.world_objects.append(new_node)
 
-            p = protocol.packet.SpawnNodePacket(2, x, y, -1, new_node.id)
+            p = protocol.packet.SpawnNodePacket(2, x, y, -1.0, new_node.id)
             for player_protocol in self.players:
                 if player_protocol.actor is not None:
                     player_protocol.send_client(p)
-        else:
-            print("Trash Count:", trash_count, "Players:", len(self.players), "Not spawning new trash node.")
 
     # Override
     def buildProtocol(self, addr):
         p = super().buildProtocol(addr)
-        self.players.add(p)
+        self.unconnected_protocols.add(p)
         return p
 
 
 if __name__ == '__main__':
     log.startLogging(sys.stdout)
+    profanity.load_censor_words()
 
     PORT: int = 8081
     factory = GameFactory('0.0.0.0', PORT)

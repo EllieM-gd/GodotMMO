@@ -385,5 +385,14 @@ y_sort_enabled = true
 [node name="Recycling" parent="Other" unique_id=646870831 instance=ExtResource("13_46meq")]
 position = Vector2(126.75, -14.5)
 
-[node name="Recycling2" parent="Other" unique_id=1928455937 instance=ExtResource("15_q4yjo")]
+[node name="Recycling2" parent="Other" unique_id=1904999635 instance=ExtResource("13_46meq")]
+position = Vector2(1209.75, 63.5)
+
+[node name="Recycling3" parent="Other" unique_id=2130466967 instance=ExtResource("13_46meq")]
+position = Vector2(655, 335)
+
+[node name="Recycling4" parent="Other" unique_id=359888514 instance=ExtResource("13_46meq")]
+position = Vector2(433, -383.25)
+
+[node name="Shop" parent="Other" unique_id=1928455937 instance=ExtResource("15_q4yjo")]
 position = Vector2(561.75, 56.499996)

@@ -24,7 +24,6 @@ outline_color = Color(0, 0, 0, 1)
 [node name="Actor" type="Node2D" unique_id=424707013]
 y_sort_enabled = true
 script = ExtResource("1_lfvdv")
-speed = 250.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=634379699 groups=["player"]]
 y_sort_enabled = true
@@ -82,3 +81,15 @@ label_settings = SubResource("LabelSettings_ltbwf")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1269351422]
+
+[node name="SpeedButton" type="Button" parent="CanvasLayer" unique_id=735995192]
+visible = false
+offset_left = 1033.0
+offset_top = 167.0
+offset_right = 1082.0
+offset_bottom = 198.0
+text = "1.0x"
+
+[connection signal="pressed" from="CanvasLayer/SpeedButton" to="." method="next_speed"]

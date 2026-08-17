@@ -3,12 +3,26 @@
 [ext_resource type="FontFile" uid="uid://rwteq26fe6oc" path="res://Fonts/Merchant Copy Wide.ttf" id="1_a0mxf"]
 [ext_resource type="Script" uid="uid://pe8b86u8fbvx" path="res://Scenes/shop_parent.gd" id="1_io27d"]
 [ext_resource type="PackedScene" uid="uid://c3x3dlyvhxhho" path="res://Scenes/shop_item.tscn" id="2_2shtd"]
+[ext_resource type="Theme" uid="uid://j4b77nsdyli1" path="res://Themes/ShopButton.tres" id="4_3ps1r"]
 [ext_resource type="FontFile" uid="uid://dkg53607fo08x" path="res://Fonts/Merchant Copy Doublesize.ttf" id="4_fdj0q"]
 [ext_resource type="Script" uid="uid://canj7u5qntamd" path="res://Scenes/RockClubShop.gd" id="4_k6jq0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8dlv"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101960786, 0.40392157, 0.3529412, 0.74509805)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_2shtd"]
 font = ExtResource("1_a0mxf")
 font_size = 80
+font_color = Color(0.41960785, 0.7294118, 0.41960785, 1)
 outline_size = 11
 outline_color = Color(0, 0, 0, 1)
 
@@ -69,6 +83,7 @@ anchor_right = 0.7
 anchor_bottom = 0.8
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_s8dlv")
 
 [node name="Label" type="Label" parent="Shop/Panel" unique_id=1565711625]
 layout_mode = 1
@@ -97,6 +112,7 @@ columns = 3
 
 [node name="ShopItem" parent="Shop/Panel/GridContainer" unique_id=727535265 instance=ExtResource("2_2shtd")]
 layout_mode = 2
+theme = ExtResource("4_3ps1r")
 text = "Rock Club
 Earn more rocks while recycling
 10 Rocks"
@@ -110,6 +126,7 @@ cost = Array[int]([10, 25, 100, 350])
 
 [node name="ShopItem2" parent="Shop/Panel/GridContainer" unique_id=1608478367 instance=ExtResource("2_2shtd")]
 layout_mode = 2
+theme = ExtResource("4_3ps1r")
 text = "Bigger Bag
 Hold more trash at once!
 5 Rocks"
@@ -120,6 +137,20 @@ shop_id = "Bag"
 shop_item = "Bigger Bag"
 description = "Hold more trash at once!"
 cost = Array[int]([5, 20, 75])
+
+[node name="ShopItem3" parent="Shop/Panel/GridContainer" unique_id=757568146 instance=ExtResource("2_2shtd")]
+layout_mode = 2
+theme = ExtResource("4_3ps1r")
+text = "Faster Legs
+Move around the map faster!
+25 Rocks"
+vertical_icon_alignment = 1
+expand_icon = true
+script = ExtResource("4_k6jq0")
+shop_id = "Speed"
+shop_item = "Faster Legs"
+description = "Move around the map faster!"
+cost = Array[int]([25, 100, 250, 1000, 5000])
 
 [node name="VScrollBar" type="VScrollBar" parent="Shop/Panel" unique_id=1379393483]
 layout_mode = 0

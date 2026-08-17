@@ -32,7 +32,7 @@ theme_override_font_sizes/font_size = 28
 theme_override_styles/disabled = SubResource("StyleBoxFlat_0dddo")
 disabled = true
 text = "Hello there my name is Xaa"
-autowrap_mode = 2
+autowrap_mode = 3
 script = ExtResource("1_yc4ao")
 
 [node name="Timer" type="Timer" parent="." unique_id=297334677]

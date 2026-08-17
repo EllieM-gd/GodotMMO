@@ -28,7 +28,6 @@ func _process(delta: float) -> void:
 	pass
 
 func _spawnTree(x, y, RespawnTimer, id):
-	print("SPAWNING IN TREE")
 	var t = TREE.instantiate()
 	t.id = id
 	nodes.add_child(t)
@@ -36,7 +35,6 @@ func _spawnTree(x, y, RespawnTimer, id):
 	t.global_position = Vector2(x,y)
 	
 func _spawn_trash(x,y,timer, id):
-	print("Spawning Trash at " + str(x), str(y))
 	var t = PAPER.instantiate()
 	nodes.add_child(t)
 	t.find_child("Interact").id = id
