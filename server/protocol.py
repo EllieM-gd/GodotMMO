@@ -7,6 +7,7 @@ import util
 import time
 from server import models
 from autobahn.twisted.websocket import WebSocketServerProtocol
+from django.contrib.auth import authenticate
 
 
 class GameServerProtocol(WebSocketServerProtocol):
@@ -114,8 +115,9 @@ class GameServerProtocol(WebSocketServerProtocol):
                 self.send_client(packet.DenyPacket("Server is full. Please try again later."))
                 return
             username, password = p.payloads
-            if models.User.objects.filter(username=username, password=password).exists():
-                user = models.User.objects.get(username=username, password=password)
+
+            user = authenticate(username=username, password=password)
+            if user:
                 self.actor = models.Actor.objects.get(user=user)
                 if self._new_char is not None:
                     self.actor.avatar_id = self._new_char
@@ -139,27 +141,31 @@ class GameServerProtocol(WebSocketServerProtocol):
                 self.send_client(packet.DenyPacket("Invalid username or password"))
         elif p.action == packet.Action.Register:
             username, password = p.payloads
+            if not username or not password:
+                self.send_client(packet.DenyPacket("Username and password cannot be empty"))
+                return
+
             if models.User.objects.filter(username=username).exists():
                 self.send_client(packet.DenyPacket("Username already exists"))
-            else:
-                # Check if the username contains profanity
-                if self.factory.filter.contains_profanity(username):
-                    self.send_client(packet.DenyPacket("Username contains inappropriate language"))
-                    return
-                # Create a user for login
-                user = models.User(username=username, password=password)
-                user.save()
-                # Create an entity and instanced entity for the player
-                player_entity = models.Entity(name=username)
-                player_entity.save()
-                # Create an instance entity for the player at (0, 0)
-                player_ientity = models.InstancedEntity(entity=player_entity, x=0, y=0)
-                player_ientity.save()
-                # Save everything as an Actor and save it
-                player = models.Actor(user=user, instanced_entity=player_ientity)
-                player.save()
-                # Send an Ok packet to the client to indicate successful registration
-                self.send_client(packet.OkPacket())
+                return
+            # Check if the username contains profanity
+            if self.factory.filter.contains_profanity(username):
+                self.send_client(packet.DenyPacket("Username contains inappropriate language"))
+                return
+            # Create a user for login
+            user = models.User.objects.create_user(username=username, password=password)
+            user.save()
+            # Create an entity and instanced entity for the player
+            player_entity = models.Entity(name=username)
+            player_entity.save()
+            # Create an instance entity for the player at (0, 0)
+            player_ientity = models.InstancedEntity(entity=player_entity, x=0, y=0)
+            player_ientity.save()
+            # Save everything as an Actor and save it
+            player = models.Actor(user=user, instanced_entity=player_ientity)
+            player.save()
+            # Send an Ok packet to the client to indicate successful registration
+            self.send_client(packet.OkPacket())
         elif p.action == packet.Action.Character:
             index = p.payloads[0]
             if self.actor is not None:

@@ -1,5 +1,7 @@
 from django.db import models
 from django.forms import model_to_dict
+from django.contrib.auth import models as auth_models
+User = auth_models.User
 
 
 def create_dict(model: models.Model) -> dict:
@@ -18,13 +20,7 @@ def create_dict(model: models.Model) -> dict:
             del d["entity_id"]
     
     return d
-    
 
-
-class User(models.Model):
-    username = models.CharField(unique=True, max_length=20)
-    password = models.CharField(max_length=99)
-    IsAdmin = models.BooleanField(default=False)
 
 class Entity(models.Model):
     name = models.CharField(unique=True, max_length=16)
@@ -35,6 +31,7 @@ class InstancedEntity(models.Model):
     y = models.FloatField()
     Rocks = models.IntegerField(default=0)
     purchased_upgrades = models.JSONField(default=list, blank=True)
+    IsAdmin = models.BooleanField(default=False)
 
 class Actor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -31,7 +31,7 @@ def direction_to(current: list[float], target: list[float]) -> list[float]:
 ## COMMANDS
 def handle_command(command: str, sender: 'GameServerProtocol'):
     message = command.split(" ")
-    isAdmin = sender.actor.user.IsAdmin if sender.actor else False
+    isAdmin = sender.actor.InstancedEntity.IsAdmin if sender.actor else False
 
     if message[0] == "/help":
         sender.send_client(packet.ChatPacket("Server", "Player commands: /help, /whoami /whereami"))
