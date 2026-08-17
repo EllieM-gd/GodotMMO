@@ -3,7 +3,7 @@ import manage
 import sys
 import protocol
 from twisted.python import log
-from twisted.internet import reactor, task
+from twisted.internet import reactor, task, ssl
 from autobahn.twisted.websocket import WebSocketServerFactory
 from better_profanity import profanity
 
@@ -17,7 +17,7 @@ UnaccessableAreas = [util.area(1555.5, -599.08, 2024.51, -200.83), util.area(-14
 class GameFactory(WebSocketServerFactory):
     def __init__(self, hostname: str, port: int):
         self.protocol = protocol.GameServerProtocol
-        super().__init__(f"ws://{hostname}:{port}")
+        super().__init__(f"wss://{hostname}:{port}")
         self.tickrate: int = 20
         self.unconnected_protocols: set[protocol.GameServerProtocol] = set()
         self.players: set[protocol.GameServerProtocol] = set()
@@ -71,8 +71,11 @@ if __name__ == '__main__':
     log.startLogging(sys.stdout)
     profanity.load_censor_words()
 
+    certs_dir: str = f"{sys.path[0]}/certs"
+    context_factory = ssl.DefaultOpenSSLContextFactory(f"{certs_dir}/server.key", f"{certs_dir}/server.crt")
+
     PORT: int = 8081
     factory = GameFactory('0.0.0.0', PORT)
 
-    reactor.listenTCP(PORT, factory)
+    reactor.listenSSL(PORT, factory, context_factory)
     reactor.run()
