@@ -71,7 +71,8 @@ if __name__ == '__main__':
     log.startLogging(sys.stdout)
     profanity.load_censor_words()
 
-    certs_dir: str = f"{sys.path[0]}/certs"
+    #certs_dir: str = f"{sys.path[0]}/certs"
+    certs_dir: str = "/etc/letsencrypt/live/eskinovammo.servequake.com"
     context_factory = ssl.DefaultOpenSSLContextFactory(f"{certs_dir}/server.key", f"{certs_dir}/server.crt")
 
     PORT: int = 8081

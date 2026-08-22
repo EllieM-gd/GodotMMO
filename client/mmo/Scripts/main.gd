@@ -30,7 +30,7 @@ func _ready():
 	Globals.request_rocks.connect(_rock_request)
 	Globals.MakePurchase.connect(_makePurchase)
 	add_child(_network_client)
-	_network_client.connect_to_server("127.0.0.1", 8081)
+	_network_client.connect_to_server("eskinovammo.servequake.com", 8081)
 	
 	#_chatbox.connect("message_sent", self.send_chat)
 	_login_screen.connect("login", _handle_login_button)

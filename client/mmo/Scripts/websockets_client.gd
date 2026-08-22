@@ -12,14 +12,14 @@ var _last_state = WebSocketPeer.STATE_CLOSED
 var client_tls_options
 
 func _ready() -> void:
-	var client_trusted_cas = load("res://Scripts/SpecialKey/server.crt")
-	client_tls_options = TLSOptions.client(client_trusted_cas, "localhost")
+	#var client_trusted_cas = load("res://Scripts/SpecialKey/server.crt")
+	#client_tls_options = TLSOptions.client(client_trusted_cas, "localhost")
 	Globals._player_dc.connect(player_disconnect)
 
 
 func connect_to_server(hostname: String, port: int) -> void:
 	var websocket_url = "wss://%s:%d" % [hostname, port]
-	var err = _client.connect_to_url(websocket_url, client_tls_options)
+	var err = _client.connect_to_url(websocket_url, TLSOptions.client_unsafe())
 	if err != OK:
 		print("Unable to initiate connection")
 		error.emit()
