@@ -11,6 +11,9 @@ from django.contrib.auth import authenticate
 
 
 class GameServerProtocol(WebSocketServerProtocol):
+    def checkOrigin(self, origin):
+        # Allow connections from any web origin (Itch.io, Firefox, local files, etc.)
+        return True
     def __init__(self):
         super().__init__()
         self._packet_queue: queue.Queue[tuple['GameServerProtocol', packet.Packet]] = queue.Queue()
