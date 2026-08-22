@@ -71,22 +71,22 @@ if __name__ == '__main__':
     log.startLogging(sys.stdout)
     profanity.load_censor_words()
 
-    certs_dir: str = f"{sys.path[0]}/certs"
-    #certs_dir: str = "/etc/letsencrypt/live/eskinovammo.servequake.com"
-    context_factory = ssl.DefaultOpenSSLContextFactory(f"{certs_dir}/server.key", f"{certs_dir}/server.crt")
-    print(context_factory)
+    #certs_dir: str = f"{sys.path[0]}/certs"
+    certs_dir: str = "/etc/letsencrypt/live/eskinovammo.servequake.com"
+    #context_factory = ssl.DefaultOpenSSLContextFactory(f"{certs_dir}/server.key", f"{certs_dir}/server.crt")
+    #print(context_factory)
     #  context_factory = ssl.DefaultOpenSSLContextFactory(
     #      f"{certs_dir}/privkey.pem",
     #      f"{certs_dir}/fullchain.pem"
     #  )
 
-    # with open(f"{certs_dir}/privkey.pem", "rb") as key_file:
-    #     key_data = key_file.read()
-    # with open(f"{certs_dir}/fullchain.pem", "rb") as cert_file:
-    #     cert_data = cert_file.read()
+    with open(f"{certs_dir}/privkey.pem", "rb") as key_file:
+        key_data = key_file.read()
+    with open(f"{certs_dir}/fullchain.pem", "rb") as cert_file:
+        cert_data = cert_file.read()
 
-    # certificate = ssl.PrivateCertificate.loadPEM(key_data + cert_data)
-    # context_factory = certificate.options()
+    certificate = ssl.PrivateCertificate.loadPEM(key_data + cert_data)
+    context_factory = certificate.options()
 
     PORT: int = 8081
     #factory = GameFactory('0.0.0.0', PORT)
