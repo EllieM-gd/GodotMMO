@@ -17,7 +17,7 @@ UnaccessableAreas = [util.area(1555.5, -599.08, 2024.51, -200.83), util.area(-14
 class GameFactory(WebSocketServerFactory):
     def __init__(self, hostname: str, port: int):
         self.protocol = protocol.GameServerProtocol
-        super().__init__(f"wss://{hostname}:{port}")
+        super().__init__(f"ws://{hostname}:{port}")
         self.tickrate: int = 20
         self.unconnected_protocols: set[protocol.GameServerProtocol] = set()
         self.players: set[protocol.GameServerProtocol] = set()
