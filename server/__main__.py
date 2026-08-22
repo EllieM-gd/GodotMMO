@@ -74,6 +74,7 @@ if __name__ == '__main__':
     certs_dir: str = f"{sys.path[0]}/certs"
     #certs_dir: str = "/etc/letsencrypt/live/eskinovammo.servequake.com"
     context_factory = ssl.DefaultOpenSSLContextFactory(f"{certs_dir}/server.key", f"{certs_dir}/server.crt")
+    print(context_factory)
     #  context_factory = ssl.DefaultOpenSSLContextFactory(
     #      f"{certs_dir}/privkey.pem",
     #      f"{certs_dir}/fullchain.pem"
@@ -88,7 +89,8 @@ if __name__ == '__main__':
     # context_factory = certificate.options()
 
     PORT: int = 8081
-    factory = GameFactory('0.0.0.0', PORT)
+    #factory = GameFactory('0.0.0.0', PORT)
+    factory = GameFactory('eskinovammo.servequake.com', PORT)
 
     reactor.listenSSL(PORT, factory, context_factory)
     reactor.run()
