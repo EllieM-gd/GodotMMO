@@ -17,7 +17,7 @@ func _ready() -> void:
 	Globals._player_dc.connect(player_disconnect)
 
 
-func connect_to_server(hostname: String, port: int) -> void:
+func connect_to_server(hostname: String, port: int = 443) -> void:
 	var websocket_url = "wss://%s:%d" % [hostname, port]
 	var err = _client.connect_to_url(websocket_url, TLSOptions.client_unsafe()) # dont judge me
 	if err != OK:

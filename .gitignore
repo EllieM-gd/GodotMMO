@@ -31,3 +31,4 @@ __pycache__/
 /server/__pycache__
 server/certs/server.crt
 server/certs/server.key
+/client/mmo/Exports

@@ -31,7 +31,7 @@ func _ready():
 	Globals.MakePurchase.connect(_makePurchase)
 	add_child(_network_client)
 	#_network_client.connect_to_server("localhost", 8081)
-	_network_client.connect_to_server("eskinovammo.servequake.com", 8081)
+	_network_client.connect_to_server("eskinovammo.servequake.com")
 	
 	#_chatbox.connect("message_sent", self.send_chat)
 	_login_screen.connect("login", _handle_login_button)
