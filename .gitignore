@@ -29,3 +29,5 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 /server/__pycache__
+server/certs/server.crt
+server/certs/server.key
