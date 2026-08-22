@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func connect_to_server(hostname: String, port: int = 443) -> void:
 	var websocket_url = "wss://%s:%d" % [hostname, port]
-	var err = _client.connect_to_url(websocket_url, TLSOptions.client_unsafe()) # dont judge me
+	var err = _client.connect_to_url(websocket_url, TLSOptions.client())
 	if err != OK:
 		print("Unable to initiate connection")
 		error.emit()

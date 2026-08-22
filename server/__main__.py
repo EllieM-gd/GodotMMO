@@ -19,6 +19,8 @@ class GameFactory(WebSocketServerFactory):
         self.protocol = protocol.GameServerProtocol
         super().__init__(f"ws://{hostname}:{port}")
         self.tickrate: int = 20
+        self.externalPort = 443
+        self.trustXForwardedFor = True
         self.unconnected_protocols: set[protocol.GameServerProtocol] = set()
         self.players: set[protocol.GameServerProtocol] = set()
 
